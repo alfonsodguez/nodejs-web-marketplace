@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-web-marketplace",
+  "version": "1.0.0",
+  "description": "Example of marketplace web application using the Nodejs-Express technology",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alfonsodguez/nodejs-web-marketplace.git"
+  },
+  "author": "Alfonso Cobelas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alfonsodguez/nodejs-web-marketplace/issues"
+  },
+  "homepage": "https://github.com/alfonsodguez/nodejs-web-marketplace#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express-handlebars": "^7.0.7"
+  }
+}
