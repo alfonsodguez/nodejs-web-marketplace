@@ -10,7 +10,7 @@ config(app)
 routing(app)   
 app.listen(3000)    
 
-mongoose.connect(process.env.MONGO, (err, data) => {
+mongoose.connect(process.env.MONGO_URI, (err, data) => {
     if (!err) {
         console.log('Conexion Mongo ok')
     } else {
