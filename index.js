@@ -14,6 +14,6 @@ mongoose.connect(process.env.MONGO_URI, (err, data) => {
     if (!err) {
         console.log('Conexion Mongo ok')
     } else {
-        console.log('Error en la conexion a Mongo: ', err)
+        console.log('Error en la conexion a Mongo', err)
     }
 })
