@@ -5,4 +5,4 @@ const tiendaController = require('../controllers/tienda');
 router.get("/Principal",      tiendaController.getPrincipal);
 router.get("/Productos/:cat", tiendaController.getProductos);
       
-module.exports=router;
+module.exports = router;
