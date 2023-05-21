@@ -19,7 +19,7 @@ module.exports = (app) => {
             secure: false
         }
     }))
-
+    app.use('/public', express.static('public', {index:false, maxAge: '1d'}))
     app.set('views', __dirname + '/../views')
     app.engine('hbs', viewEngine.create({
         extname: 'hbs',
@@ -55,6 +55,4 @@ module.exports = (app) => {
             }
         }
     }).engine)
-
-    app.use('/public' ,express.static('public', {index:false, maxAge: '1d'}))
 }
