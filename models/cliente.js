@@ -4,7 +4,7 @@ const clienteSchema = new mongoose.Schema({
     nombre:          { type: String, required: true },
     primerApellido:  { type: String },
     segundoApellido: { type: String },
-    naacimiento:     { type: Date,    default: Date.now() },
+    nacimiento:     { type: Date,    default: Date.now() },
     cuentaActiva:    { type: Boolean, default: false },
     tipoIdentificacion: { 
         tipoId: { type: String }, 
