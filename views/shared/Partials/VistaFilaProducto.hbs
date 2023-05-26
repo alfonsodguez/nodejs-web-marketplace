@@ -1,0 +1,13 @@
+<tr>
+    <th scope="row">{{this.ean}}</th>
+    <td>{{this.nombre}}</td>
+    <td><a href="http://localhost:3000/Tienda/MostrarProducto/{{this.ean}}" class="btn btn-outline-danger btn-sm">Detalle del producto</a></th>
+    <td><p>{{this.precio}}</p> <p>1 LITRO/KG: {{this.precioKilo}}</p></td>
+    <td>
+        <button type="button" class="btn btn-success btn-sm" id="btnMenos-{{this.ean}}">-</button>   
+        <label id="EAN-{{this.ean}}">1</label>
+        <button type="button" class="btn btn-success btn-sm" id="btnMas-{{this.ean}}">+</button>
+    </td>
+    <td><a href="#" class="btn btn-btn-light btn-sm" id="btnComprar-{{this.ean}}"><img src="/public/images/boton_AddCestaProducto.png"></a>Comprar</td>
+</tr>
+

@@ -1,0 +1,35 @@
+<div class="container" style="background-color: gray;">
+    <div class="row">
+        <table class="table">
+            <thead style="background-color: orange;">
+                <tr>
+                    <th scope="col">EAN</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Detalle del producto</th>
+                    <th scope="col">Precio €</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Añadir Cesta</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this.listaproductos as |producto|}}
+                    {{> VistaFilaProducto producto}}
+                {{/each}}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<script>    
+    $('button[id^="btnMenos"]').click(
+        // TODO
+    );
+
+    $('button[id^="btnMas"]').click(
+        // TODO
+    );
+
+    $('a[id^="btnComprar"]').click(
+        // TODO
+    )
+</script>

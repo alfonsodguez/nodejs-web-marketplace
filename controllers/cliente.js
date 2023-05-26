@@ -17,7 +17,7 @@ module.exports = {
         
             const cliente = await Cliente
                 .findOne({'credenciales.email': email})
-                .populate([{ 
+                .populate([{   
                     path: 'direccion', 
                     model: 'Direccion', 
                     populate: [
@@ -50,10 +50,9 @@ module.exports = {
                     })
                 
                     cliente.pedidoActual = pedido
-                    req.session.cliente = cliente
-                    
-                    res.status(200).redirect(URL.PRODUCTOS);
+                    req.session.cliente = cliente    
                 }
+                res.status(200).redirect(URL.PRODUCTOS);
             }
             res.status(200).render('Cliente/Login.hbs', { layout: null,  mensajeErrorCustom: "Email o contraseña incorrectas, vuelve a intentarlo" })
         } catch (error) {
