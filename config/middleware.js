@@ -1,7 +1,7 @@
 const express = require('express')
+const session = require('express-session')
 const viewEngine = require('express-handlebars')
 const cookieParser = require('cookie-parser')
-const session = require('express-session')
 
 module.exports = (app) => {
     app.use(cookieParser())
@@ -19,7 +19,7 @@ module.exports = (app) => {
             secure: false
         }
     }))
-    app.use('/public', express.static('public', {index:false, maxAge: '1d'}))
+    app.use('/public', express.static('public', {index: false, maxAge: '1d'}))
     app.set('views', __dirname + '/../views')
     app.engine('hbs', viewEngine.create({
         extname: 'hbs',
