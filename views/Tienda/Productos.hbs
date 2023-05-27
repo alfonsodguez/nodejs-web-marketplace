@@ -69,17 +69,17 @@
                 item.cantidad += itemPedido.cantidad
 
                 // borramos item para añadirlo con la cantidad actualizada
-                const newArrayItemsPedido = pedidoStorage.filter(itemDelPedido => itemDelPedido.ean != item.ean)
-                newArrayItemsPedido.push(item)
+                const itemsPedidoUpdate = pedidoStorage.filter(itemDelPedido => itemDelPedido.ean != item.ean)
+                itemsPedidoUpdate.push(item)
 
-                localStorage.setItem('pedido', JSON.stringify(newArrayItemsPedido))
+                localStorage.setItem('pedido', JSON.stringify(itemsPedidoUpdate))
 
                 // ojo!! no puedo pintarlo directamente sino crearia una fila duplicada, antes modificar la cantidad
                 $('#itemsMiniCesta').find(`td:contains('${item.nombre}')`).siblings('td').eq(0).text(`${item.cantidad}`)
             }
             else {
                 pedidoStorage.push(itemPedido)
-                localStorage.setItem('pedido', JSON.stringify(itemsDelPedido))
+                localStorage.setItem('pedido', JSON.stringify(pedidoStorage))
                 
                 _pintarDatosMiniCesta(itemPedido.nombre, itemPedido.cantidad, itemPedido.precio)
             }
