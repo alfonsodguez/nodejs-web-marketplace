@@ -32,7 +32,7 @@ module.exports = {
                     path: 'historicoPedidos', 
                     model: 'Pedido', 
                     populate: [
-                        { path: 'elementosPedido.productoItem', model: 'Producto' }
+                        { path: 'articulos.productoItem', model: 'Producto' }
                     ]
                 }])
                 .lean()
@@ -46,17 +46,17 @@ module.exports = {
                         _id: new mongoose.Types.ObjectId(),
                         fecha: Date.now(),
                         estado: 'pendiente',
-                        cliente: cliente._id,
+                        clienteId: cliente._id,
                         gastosEnvio: 5,
                         subtotal: 0,
                         total: 0,
-                        elementosPedido: []
+                        articulos: []
                     })
                 
                     cliente.pedidoActual = pedido
                     req.session.cliente = cliente    
                 }
-                res.status(200).redirect(URL.PRODUCTOS);
+                res.status(200).redirect(URL.PRODUCTOS)
             }
             res.status(200).render('Cliente/Login.hbs', { layout: null,  mensajeErrorCustom: "Email o contraseña incorrectas, vuelve a intentarlo" })
         } catch (error) {
@@ -120,7 +120,7 @@ module.exports = {
             })
             .catch(async (err) => {
                 const provincias = await _findProvincias()
-                res.status(200).send('Cliente/Registro.hbs', { layout: null, listaProvincias: provincias, mensajeError: 'Error interno del servidor...' });
+                res.status(200).send('Cliente/Registro.hbs', { layout: null, listaProvincias: provincias, mensajeError: 'Error interno del servidor...' })
             })
     }
 }

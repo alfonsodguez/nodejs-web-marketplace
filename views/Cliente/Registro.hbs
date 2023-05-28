@@ -156,8 +156,8 @@
                                                                 <label for="inputProvincia" class="form-label"><strong>Provincia</strong></label>
                                                                 <select id="inputProvincia" name="codpro" class="form-control">
                                                                     <option value="0" selected>Elige provincia...</option>
-                                                                    {{#each listaprovs as |unaprov|}}
-                                                                        <option value="{{unaprov.CodPro}}">{{unaprov.NombreProvincia}}</option>
+                                                                    {{#each listaProvincias as |provincia|}}
+                                                                        <option value="{{provincia.codPro}}">{{provincia.nombreProvincia}}</option>
                                                                     {{/each}}
                                                                 </select>
                                                             </div>                    
