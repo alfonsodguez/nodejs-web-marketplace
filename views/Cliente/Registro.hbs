@@ -460,7 +460,7 @@
                 $('#telefonos > option').first().remove()
             }
 
-            if(esTlfnModif) {
+            if (esTlfnModif) {
                 localStorage.setItem('tlfno-' + esTlfnModif, JSON.stringify(nuevoTlfno))
                 $(`#telefonos option[value="${posTlfnModif}"]`).text(nuevoTlfno.numero)                
             } else {
@@ -476,11 +476,11 @@
         //---------------------------- TODO: modificar y borrar tlfnos -------------------------------
         $('#botonModififcarDirec').click(function(ev) {
             modalAltaDir.show()
-            const numDirecciones = $('#direcciones').val()
+            const numDirecciones   = $('#direcciones').val()
             const direccionStorage = JSON.parse(localStorage.getItem('direc-' + numDirecciones))
             
-            esDireccionModif = true
-            posDireccionModif = parseInt(_numdir)
+            esDireccionModif  = true
+            posDireccionModif = parseInt(numDirecciones)
 
             Object.keys(direccionStorage).forEach((prop) => {
                 switch(prop) {
@@ -503,16 +503,16 @@
         $('button:submit').click(function(evt) {
             evt.preventDefault()
             const direcciones = []
-            const telefonos = [] 
+            const telefonos   = [] 
 
-            for(var pos=0; pos<localStorage.length; pos++){
-                //tenemos almacenado direcciones y telefonos con las keys: "direct-0", "tlfno-0", ....
+            for(var pos=0; pos<localStorage.length; pos++) {
+                // tenemos almacenado direcciones y telefonos con las keys: "direct-0", "tlfno-0", ....
                 const key = localStorage.key(pos)
-                if(/^direct-/.test(key)){
-                    direcciones.push(JSON.parse(localStorage[key])) //<---DESERIALIZAMOS
+                if (/^direct-/.test(key)) {
+                    direcciones.push(JSON.parse(localStorage[key])) 
                 } 
-                else if(/^tlfno-/.test(key)){
-                    telefonos.push(JSON.parse(localStorage[key])) //<---DESERIALIZAMOS
+                else if (/^tlfno-/.test(key)) {
+                    telefonos.push(JSON.parse(localStorage[key])) 
                 }
             };
 

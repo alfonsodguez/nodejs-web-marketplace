@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finalizar Compra</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container" style="background-color: gray;">
+        <div class="row">
+            <table class="table">
+                <thead style="background-color: orange;">
+                    <tr><td><strong>DATOS DEL TICKET</strong></td></tr>
+                    <tr>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Detalle del producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio €</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each this.pedido.ElementosPedido as |item| }}
+                        {{>_VistaParcialFinalizarPedido item}}
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p><strong>Subtotal: </strong>this.SubTotalPedido</p>
+    <p><strong>TARIFA DE SERVICIO: </strong>this.GastosEnvio</p>
+    <p><strong>TOTAL: </strong>this.TotalPedido</p>
+</body>
+</html>
