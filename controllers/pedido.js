@@ -1,7 +1,6 @@
-var Producto = require('../models/producto'); 
-
 module.exports = {
     mostrarPedido: (req,res) => {
-        res.status(200).render('Pedido/FinalizarPedido.hbs',{pedido: req.session.cliente.pedidoActual });
+        const pedido = req.session.cliente.pedidoActual
+        res.status(200).render('Pedido/FinalizarPedido.hbs', { pedido });
     }
 }

@@ -122,7 +122,6 @@ module.exports = {
                 const provincias = await _findProvincias()
                 res.status(200).send('Cliente/Registro.hbs', { layout: null, listaProvincias: provincias, mensajeError: 'Error interno del servidor...' });
             })
-
     }
 }
 
