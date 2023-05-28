@@ -103,7 +103,7 @@ module.exports = {
         const insertCliente = Cliente({
             ...cliente, 
             direccion: direccionIds,
-            pedidoActual: new mongoose.Types.ObjectId(),
+            pedidoActual: null,
             historicoPedidos: []
         }).save()
 

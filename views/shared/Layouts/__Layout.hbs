@@ -109,6 +109,7 @@
         </div>
     </div>
     <script>
+        //---------------------------------- treview --------------------------------------------
         const treeview = $('#treeviewCategorias')
         let categorias = "{{ this.listaCategorias }}"
         const separadorCategoria = ":"
@@ -120,7 +121,6 @@
                 treeview.append(`<li id="${categoria.path}"><span class="caret">${categoria.nombre}</span></li>`)          
             }
         })
-        $(".caret").click(despliegaSubcategorias)
 
         function despliegaSubcategorias() {
             const idCategoria    = $(this).parent().attr('id')                 
@@ -144,6 +144,26 @@
             $(this).parent().children("ul.nested").toggleClass("active")
             $(this).toggleClass("caret-down")
         }
+
+        $(".caret").click(despliegaSubcategorias)
+    
+        //---------------------------- finalizar compra -------------------------------
+        $('#formalizar').click(function() {
+            const pedido = JSON.parse(localStorage.getItem('pedido'))
+            
+            $.ajax({
+                type: 'POST',
+                url: "http://localhost:3000/api/finalizarPedido",
+                contentType: 'application/json',
+                data: JSON.stringify(pedido),
+                processData: false
+            })
+            .done(() => {                
+                //redireccionamos al login
+                window.location.href = 'http://localhost:3000/Pedido/FinalizarPedido'
+            })
+            .fail((err) => console.log('error al enviar pedido al server', err))
+        })
     </script>
 </body>
 </html>

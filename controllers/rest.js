@@ -10,5 +10,8 @@ module.exports = {
         } catch (err) {
             console.log('Error al recuperar los municipios', err)
         }
+    },
+    postFinalizarPedido: async(req, res) => {
+
     }
 }
