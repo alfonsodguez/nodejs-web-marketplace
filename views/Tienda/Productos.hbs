@@ -19,86 +19,11 @@
         </table>
     </div>
 </div>
+<script src="../../public/js/botonMenos.js"></script>
+<script src="../../public/js/botonMas.js"></script>
+<script src="../../public/js/botonComprar.js"></script>
+<script src="../../public/js/checkPedidosStorage.js"></script>
 <script>    
-    $('button[id^="btnMenos"]').click(function() { 
-        const ean = $(this).attr("id").split('-')[1]
-        const lab = $(this).siblings('label')
-        const valueLab = lab.text()
-
-        if (valueLab > 1 ) {
-            $(lab).text(parseInt(valueLab) - 1)
-        } else {
-            $(lab).siblings('button').first().prop('disabled', true)
-        }
-    })
-
-    $('button[id^="btnMas"]').click(function() { 
-        const ean = $(this).attr("id").split('-')[1]
-        const valueLab = parseFloat($(this).siblings('label').text()) + 1
-        //habilitamos boton menos 
-        $(this).siblings('button').first().prop('disabled', false)
-        //modificamos valor del lab
-        $(this).siblings('label').text(valueLab)
-        }   
-    )
-
-    /**
-    * añadimos pedido al localStorage 
-    */
-    $('a[id^="btnComprar"]').click(function() {
-        const ean = $(this).attr('id').split('-')[1];
-        const itemPedido = { 
-            ean: $(this).parent().siblings('th').text(),                                                      
-            nombre: $(this).parent().siblings('td').first().text(),                                         
-            precio: parseFloat($(this).parent().siblings('td').eq(3).children('p').first().text()),  
-            cantidad: parseFloat($(`label[id*="${ean}"`).text())   
-        };
-
-        const pedidoStorage = JSON.parse(localStorage.getItem('pedido'));
-        if (pedidoStorage == null) {
-            //creo key pedido en el localStorage y añado itemPedido a la lista de pedidos
-            const itemsDelPedido = [ itemPedido ];
-            localStorage.setItem('pedido', JSON.stringify(itemsDelPedido))
-            
-            _pintarDatosMiniCesta(itemPedido.nombre, itemPedido.cantidad, itemPedido.precio)
-        }
-        else{
-            //compruebo que si ese item ya existe... entonces incremento cantidad (ojoo!! que la cantidad a añadir pueder ser 1 o mayor)
-            const item = pedidoStorage.find((item) => item.ean == itemPedido.ean)
-            if (item != null) {
-                item.cantidad += itemPedido.cantidad
-
-                // borramos item para añadirlo con la cantidad actualizada
-                const itemsPedidoUpdate = pedidoStorage.filter(itemDelPedido => itemDelPedido.ean != item.ean)
-                itemsPedidoUpdate.push(item)
-
-                localStorage.setItem('pedido', JSON.stringify(itemsPedidoUpdate))
-
-                // ojo!! no puedo pintarlo directamente sino crearia una fila duplicada, antes modificar la cantidad
-                $('#itemsMiniCesta').find(`td:contains('${item.nombre}')`).siblings('td').eq(0).text(`${item.cantidad}`)
-            }
-            else {
-                pedidoStorage.push(itemPedido)
-                localStorage.setItem('pedido', JSON.stringify(pedidoStorage))
-                
-                _pintarDatosMiniCesta(itemPedido.nombre, itemPedido.cantidad, itemPedido.precio)
-            }
-        }
-    })
-
-    /**
-    * cada vez que haya un cambio en la url /Tienda/Productos/"xxxx" comprobamos
-    * si existe datos del pedido en el localStorage para pintarlo en el layout
-    */
-    $(function checkPedidosEnLocalStorage() {
-        const pedidoStorage = JSON.parse(localStorage.getItem('pedido'));
-        if(pedidoStorage != null) {
-            pedidoStorage.forEach(itemPedido => {
-                _pintarDatosMiniCesta(itemPedido.nombre, itemPedido.precio, itemPedido.cantidad)
-            })
-        };
-    })
-
     /**
     *  esta vista se incrusta en el mismo layout, por eso tenemos acceso al DOM del layout
     */
@@ -109,7 +34,5 @@
             <td>${precio}</td>
             <td><strong>X</strong></td>
             </tr>`)
-    }           
-
-    // TODO: crear otro objeto en el localStorage para calcular el total del pedido 
+    }      
 </script>

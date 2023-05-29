@@ -1,7 +1,7 @@
 const Municipio = require('../models/municipio')
 
 module.exports = {
-    getMunicipios: async (req, res) => {
+    getMunicipios: async(req, res) => {
         try {
             const codPro = req.params.codPro
             const municipios = await Municipio.find({ codPro: codPro }).lean()
@@ -12,6 +12,6 @@ module.exports = {
         }
     },
     postFinalizarPedido: async(req, res) => {
-
+        // TODO
     }
 }

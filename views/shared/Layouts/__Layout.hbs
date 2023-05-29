@@ -108,62 +108,7 @@
             </div>
         </div>
     </div>
-    <script>
-        //---------------------------------- treview --------------------------------------------
-        const treeview = $('#treeviewCategorias')
-        let categorias = "{{ this.listaCategorias }}"
-        const separadorCategoria = ":"
-
-        categorias = JSON.parse(categorias.replace(/&quot;/g, `"`))  // <-- deserializar categorias 
-        categorias.forEach(categoria => {
-            const paths = categoria.path.split(separadorCategoria)
-            if (paths.length == 1) {
-                treeview.append(`<li id="${categoria.path}"><span class="caret">${categoria.nombre}</span></li>`)          
-            }
-        })
-
-        function despliegaSubcategorias() {
-            const idCategoria    = $(this).parent().attr('id')                 
-            const regexCategoria = new RegExp("^" + idCategoria + "-[0-9]+$")
-            const subCategorias  = categorias.filter(categoria => categoria.path.search(regexCategoria) != -1)
-        
-            if (subCategorias.length > 0) {
-                let tags = '<ul class="nested">'
-                subCategorias.forEach(subCategoria => { 
-                    tags += `<li id="${subCategoria.path}"><span class="caret">${subCategoria.nombre}</span></li>` 
-                });
-                tags += '</ul>'
-
-                $(this).parent().append(tags)
-                $(".caret").click(despliegaSubcategorias)
-            }
-            // recuperar los productos por idCategoria
-            const urlProductos = "http://localhost:3000/Tienda/Productos/" + idCategoria
-            window.location = urlProductos
-    
-            $(this).parent().children("ul.nested").toggleClass("active")
-            $(this).toggleClass("caret-down")
-        }
-
-        $(".caret").click(despliegaSubcategorias)
-    
-        //---------------------------- finalizar compra -------------------------------
-        $('#formalizar').click(function() {
-            const pedido = JSON.parse(localStorage.getItem('pedido'))
-            
-            $.ajax({
-                type: 'POST',
-                url: "http://localhost:3000/api/finalizarPedido",
-                contentType: 'application/json',
-                data: JSON.stringify(pedido),
-                processData: false
-            })
-            .done(() => {                
-                //redireccionamos al login
-                window.location.href = 'http://localhost:3000/Pedido/FinalizarPedido'
-            })
-            .fail((err) => console.log('error al enviar pedido al server', err))
-        })
-    </script>
+    <script src="../../../public/js/treview.js"></script>
+    <script src="../../../public/js/finalizarCompra.js"></script>
 </body>
 </html>

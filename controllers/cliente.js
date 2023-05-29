@@ -83,20 +83,20 @@ module.exports = {
 
             return direccion = {
                 _id: direccionId,
-                cp: parseInt(direc.cp) || 0,
-                tipo: direccion.tipoVia || null ,
-                nombre: direccion.nombreVia ,
-                numero: direccion.numeroVia || null,
-                piso: direccion.piso || null  ,
-                puerta: direccion.puerta || null,
-                bloque: direccion.bloque || null,
-                escalera: direccion.escalera || null   ,
-                urbanizacion: direccion.urbanizacion || null,
-                observaciones: direccion.observaciones || null,
+                cp: parseInt(direc.cp),
+                tipo: direccion.tipoVia,
+                nombre: direccion.nombreVia,
+                numero: direccion.numeroVia,
+                piso: direccion.piso,
+                puerta: direccion.puerta,
+                bloque: direccion.bloque,
+                escalera: direccion.escalera,
+                urbanizacion: direccion.urbanizacion,
+                observaciones: direccion.observaciones,
                 provincia: provincia._id,
                 municipio: municipio._id,
                 clienteId: clienteId,
-                esPrincipal: direccion.esprincipal || true
+                esPrincipal: direccion.esprincipal
             }
         }))
 
