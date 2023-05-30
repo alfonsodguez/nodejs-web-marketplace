@@ -18,8 +18,8 @@ pedidoSchema.methods.calcularTotalPedido = async function() {
     const articulosExpanded = await Producto.populate(this.articulos, { path: 'productoItem' })
     const subtotal = 0
 
-    articulosExpanded.forEach((itemPedido) => {
-            subtotal += itemPedido.productoItem.precio * itemPedido.cantidadItem
+    articulosExpanded.forEach((articulo) => {
+            subtotal += articulo.productoItem.precio * articulo.cantidadItem
         }
     )
     this.subtotal = Math.round(subtotal * 100)/100

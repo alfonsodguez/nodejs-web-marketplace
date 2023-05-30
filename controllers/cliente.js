@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 const Cliente = require('../models/cliente')
 const Direccion = require('../models/direccion')
 const Provincia = require('../models/provincia')

@@ -3,6 +3,6 @@ const router = express.Router()
 const restController = require('../controllers/rest')
 
 router.get("/getMunicipios/:codpro", restController.getMunicipios)
-router.post("/finalizarPedido",      restController.postFinalizarPedido)
+router.post("/finalizarCompra",      restController.postFinalizarCompra)
 
 module.exports = router

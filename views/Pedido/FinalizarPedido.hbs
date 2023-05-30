@@ -21,15 +21,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each this.pedido.articulos as |item| }}
-                        {{>_VistaParcialFinalizarPedido item}}
+                    {{#each this.pedido.articulos as |articulo| }}
+                        {{>_VistaParcialFinalizarPedido articulo}}
                     {{/each}}
                 </tbody>
             </table>
         </div>
     </div>
-    <p><strong>Subtotal: </strong>this.SubTotalPedido</p>
-    <p><strong>TARIFA DE SERVICIO: </strong>this.GastosEnvio</p>
-    <p><strong>TOTAL: </strong>this.TotalPedido</p>
+    <p><strong>Subtotal: </strong>this.subtotal</p>
+    <p><strong>TARIFA DE SERVICIO: </strong>this.gastosEnvio</p>
+    <p><strong>TOTAL: </strong>this.total</p>
 </body>
 </html>
