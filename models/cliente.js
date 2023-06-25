@@ -14,11 +14,11 @@ const clienteSchema = new mongoose.Schema({
         email: { type: String }, 
         hash:  { type: String },
     },
-    telefono: [{ 
+    telefonos: [{ 
         numero:      { type: String },
         esPrincipal: { type: Boolean }
     }], 
-    direccion:        [{ type: mongoose.Schema.Types.ObjectId, ref: 'Direccion' }], 
+    direcciones:      [{ type: mongoose.Schema.Types.ObjectId, ref: 'Direccion' }], 
     historicoPedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pedido' }],
     pedidoActual:      { type: mongoose.Schema.Types.ObjectId, ref: 'Pedido' },
 })

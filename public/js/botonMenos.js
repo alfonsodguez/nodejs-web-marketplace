@@ -1,5 +1,4 @@
 $('button[id^="btnMenos"]').click(function() { 
-    const ean = $(this).attr("id").split('-')[1]
     const lab = $(this).siblings('label')
     const valueLab = lab.text()
 

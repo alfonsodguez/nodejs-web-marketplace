@@ -9,8 +9,14 @@ module.exports = {
         res.status(200).render('Tienda/Principal.hbs', { listaCategorias: serializeCategorias })
     },
     getProductos: async (req, res) => {
-        const pathCategoria = req.params.cat
-        const productos  = await Producto.find({pathCategoria}).lean()
+        const pathCategoria = req.params.cat 
+        let criteria = {}
+
+        if (pathCategoria) {
+            criteria.pathcategoria = pathCategoria 
+        }
+        
+        const productos  = await Producto.find(criteria).lean()
         const categorias = await _findCategorias()
         const serializeCategorias = JSON.stringify(categorias)
 

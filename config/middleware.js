@@ -9,7 +9,7 @@ module.exports = (app) => {
     app.use(express.json()) 
     //--------- configuracion session ------------
     app.use(session({
-        secret: process.env.SECRETKEY_SESSIONS_ID,
+        secret: process.env.SECRET_KEY_SESSION,
         resave: false,
         saveUninitialized :false,
         cookie: {
@@ -19,13 +19,13 @@ module.exports = (app) => {
             secure: false
         }
     }))
-    app.use('/public', express.static('public', {index: false, maxAge: '1d'}))
+    app.use('/public', express.static('public', { index: false, maxAge: '1d' }))
     app.set('views', __dirname + '/../views')
     app.engine('hbs', viewEngine.create({
         extname: 'hbs',
         defaultLayout: '__Layout',
-        layoutsPath: __dirname + '/../views/shared/Layouts',
-        partialsPath: __dirname + '/../views/shared/Partials',
+        layoutsDir: __dirname + '/../views/shared/Layouts',
+        partialsDir: __dirname + '/../views/shared/Partials',
         helpers: {
             split: (cadena, separador, posicion) => cadena.split(separador)[posicion],
             ifcond: (value1, operador, value2) => {

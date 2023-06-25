@@ -70,7 +70,6 @@
                         {{/if}}
                     </div>
                 </div>
-
             </div>
             <div class="col-8">
                 {{{ body }}}
@@ -100,15 +99,19 @@
                         </table>
                         <p><strong>Tarifa de Servicio:</strong> 7.21 €</p>
                         <p><strong>TOTAL</strong> 0.00 €</p>
-                        <a href="#" type="button" class="btn btn-outline-light btn-sm">FORMALIZAR</a>
-                        <a href="#" type="button" class="btn btn-outline-light btn-sm disabled">GUARDAR</a>
+                        <a href="#" id="formalizar" type="button" class="btn btn-outline-light btn-sm">FORMALIZAR</a>
+                        <a href="#" id="guardar" type="button" class="btn btn-outline-light btn-sm disabled">GUARDAR</a>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="listas-tab">...</div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="../../../public/js/treview.js"></script>
-    <script src="../../../public/js/finalizarCompra.js"></script>
+    <script>
+        // variable global
+        const serializeCategorias = "{{ this.listaCategorias }}"
+    </script>
+    <script src="/public/js/treeviewCategorias.js"></script>
+    <script src="/public/js/finalizarCompra.js"></script>
 </body>
 </html>

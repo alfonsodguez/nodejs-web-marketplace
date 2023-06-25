@@ -4,9 +4,9 @@ $('button:submit').click(function(evt) {
     const telefonos   = [] 
 
     for (var pos=0; pos<localStorage.length; pos++) {
-        // tenemos almacenado direcciones y telefonos con las keys: "direct-0", "tlfno-0", ....
+        // tenemos almacenado direcciones y telefonos con las keys: "direc-0", "tlfno-0", ....
         const key = localStorage.key(pos)
-        if (/^direct-/.test(key)) {
+        if (/^direc-/.test(key)) {
             direcciones.push(JSON.parse(localStorage[key])) 
         } 
         else if (/^tlfno-/.test(key)) {
@@ -27,8 +27,8 @@ $('button:submit').click(function(evt) {
             email: $('#inputEmail').val(),
             password: $('#inputPassword').val(),
         },
-        telefono: telefonos, 
-        direccion: direcciones,
+        telefonos, 
+        direcciones,
     }  
 
     $.ajax({

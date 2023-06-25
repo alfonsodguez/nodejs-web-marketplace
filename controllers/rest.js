@@ -5,8 +5,8 @@ const Pedido    = require('../models/pedido')
 module.exports = {
     getMunicipios: async (req, res) => {
         try {
-            const codPro = req.params.codPro
-            const municipios = await Municipio.find({ codPro: codPro }).lean()
+            const codProvincia = req.params.id
+            const municipios = await Municipio.find({CodPro: codProvincia}).lean()
 
             res.status(200).json(municipios)
         } catch (err) {
@@ -25,13 +25,17 @@ module.exports = {
             const pedidoEnCrudo = req.body;
             const pedido = new Pedido(req.session.cliente.pedidoActual)
 
-            const articulos = await Promise.all(pedidoEnCrudo.map(async(itemPedido) => {
-                const producto = await Producto.findOne({ean: itemPedido.ean}).select('_id cantidad').lean()
-                return {
-                    productoItem: producto._id,
-                    cantidadItem: itemPedido.cantidad
-                }
-            }))
+            const articulos = await Promise.all(
+                pedidoEnCrudo.map(async(itemPedido) => {
+                    const producto = await Producto.findOne({ean: itemPedido.ean}).select('_id cantidad').lean()
+
+                    return {
+                        productoItem: producto._id,
+                        cantidadItem: itemPedido.cantidad
+                    }
+                })
+            )
+
             pedido.articulos = articulos
             await pedido.calcularTotalPedido()
             await pedido.save()

@@ -6,13 +6,13 @@ $('#botonAceptarDirec').click(function(ev) {
 
     $('div[id="altaDireccion"] label').each((index, lab) => {
         const attrLabFor = $(lab).attr('for')  
+        console.log(attrLabFor)
         if (attrLabFor != "inputEsPrincipal") {
             nuevaDireccion[$('#' + attrLabFor).attr('name')] = $('#' + attrLabFor).val()
         } else {
             nuevaDireccion[$('#' + attrLabFor).attr('name')] = $('#' + attrLabFor).is(':checked')
         }
     })
-        
     const esOpcionPorDefecto = $('#direcciones > option').first().val() === "No se han definido direcciones"
     if (esOpcionPorDefecto) { 
         $('#direcciones > option').first().remove()
@@ -30,7 +30,7 @@ $('#botonAceptarDirec').click(function(ev) {
         
     //habilitamos botones borrar y modificar direccion...
     $('#botonModififcarDirec, #botonBorrarDirec').removeAttr('disabled')
-    modalAltaDir.hide()
+    modalAltaDirecccion.hide()
 })
 
 $('#botonAceptarTlfno').click(function(ev) {
@@ -54,5 +54,5 @@ $('#botonAceptarTlfno').click(function(ev) {
     }
 
     $('#botonModififcarTelef, #botonBorrarTelef').removeAttr('disabled')
-    modalAltaTlf.hide()
+    modalAltaTlfn.hide()
 })

@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 const Producto = require('./producto')
 
 const pedidoSchema = new mongoose.Schema({
-    fecha:   { type: Date,   required: true, default: Date.now() },
-    estado:  { type: String, required: true, default: 'pendiente' },
-    clienteId: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente' },
+    clienteId:   { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente' },
+    fecha:       { type: Date,   required: true, default: Date.now() },
+    estado:      { type: String, required: true, default: 'pendiente' },
     gastosEnvio: { type: Number, required: true, default: 5 },
     subtotal:    { type: Number, required: true, default: 0 },
     total:       { type: Number, required: true, default: 0 },

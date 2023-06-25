@@ -1,15 +1,27 @@
- /**
-* añadimos pedido al localStorage 
-*/
- $('a[id^="btnComprar"]').click(function() {
+function _pintarDatosMiniCesta(nombre, cantidad, precio) {
+    $('#itemsMiniCesta').append(
+        `<tr>
+            <td>${nombre}</td>
+            <td>${cantidad}</td>
+            <td>${precio}</td>
+            <td><strong>X</strong></td>
+        </tr>`
+    )
+}  
+
+/**
+ * añadimos pedido al localStorage 
+ */
+$('a[id^="btnComprar"]').click(function() {
     const ean = $(this).attr('id').split('-')[1];
     const itemPedido = { 
         ean: $(this).parent().siblings('th').text(),                                                      
         nombre: $(this).parent().siblings('td').first().text(),                                         
         precio: parseFloat($(this).parent().siblings('td').eq(3).children('p').first().text()),  
-        cantidad: parseFloat($(`label[id*="${ean}"`).text())   
+        cantidad: parseFloat($(`label[id*="EAN-${ean}"`).text())   
     };
 
+    console.log(itemPedido)
     const pedidoStorage = JSON.parse(localStorage.getItem('pedido'));
     if (pedidoStorage == null) {
         //creo key pedido en el localStorage y añado itemPedido a la lista de pedidos

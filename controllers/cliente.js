@@ -1,12 +1,11 @@
+const _ = require('lodash')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const Cliente = require('../models/cliente')
 const Direccion = require('../models/direccion')
 const Provincia = require('../models/provincia')
 const Municipio = require('../models/municipio')
-const Cliente = require('../models/cliente')
 const Pedido = require('../models/pedido')
-const Provincia = require('../models/provincia')
 
 const URL = {
     PRODUCTOS: 'http://localhost:3000/Tienda/Productos/15-8-5'
@@ -22,29 +21,32 @@ module.exports = {
         
             const cliente = await Cliente
                 .findOne({'credenciales.email': email})
-                .populate([{   
-                    path: 'direccion', 
-                    model: 'Direccion', 
-                    populate: [
-                        { path: 'provincia', model: 'Provincia' },
-                        { path: 'municipio', model: 'Municipio '}
-                    ]
-                },{ 
-                    path: 'historicoPedidos', 
-                    model: 'Pedido', 
-                    populate: [
-                        { path: 'articulos.productoItem', model: 'Producto' }
-                    ]
-                }])
+                .populate([
+                    {   
+                        path: 'direcciones', 
+                        model: 'Direccion', 
+                        populate: [
+                            { path: 'provincia', model: 'Provincia' },
+                            { path: 'municipio', model: 'Municipio '}
+                        ]
+                    },
+                    { 
+                        path: 'historicoPedidos', 
+                        model: 'Pedido', 
+                        populate: [
+                            { path: 'articulos.productoItem', model: 'Producto' }
+                        ]
+                    }
+                ])
                 .lean()
 
+                console.log(cliente)
             if (cliente) {
                 const hash = cliente.credenciales.hash
                 const isValidPassword = bcrypt.compareSync(password, hash)
             
                 if (isValidPassword) {
                     const pedido = new Pedido({
-                        _id: new mongoose.Types.ObjectId(),
                         fecha: Date.now(),
                         estado: 'pendiente',
                         clienteId: cliente._id,
@@ -53,7 +55,7 @@ module.exports = {
                         total: 0,
                         articulos: []
                     })
-                
+                    console.log(pedido)
                     cliente.pedidoActual = pedido
                     req.session.cliente = cliente    
                 }
@@ -66,19 +68,22 @@ module.exports = {
     },
     getRegistro: async (req, res) => { 
         const provincias =  await _findProvincias()
+
         res.status(200).render('Cliente/Registro.hbs', { layout: null, listaProvincias: provincias}) 
     },
     postRegistro: async (req, res) => {
         const cliente = req.body
-        const rawDirecciones = cliente.direccion
+        const clienteId = new mongoose.Types.ObjectId
+        const rawDirecciones = cliente.direcciones
         const direccionIds = []
-        const clienteId   = new mongoose.Types.ObjectId
-        
+
+        console.log(cliente)
+        console.log(rawDirecciones)        
         const direcciones = await Promise.all(rawDirecciones.map(async direccion => {
-            const codPro = parseInt(direccion.codpro)
-            const codMun = parseInt(direc.codmun)
-            const provincia = await Provincia.findOne({codPro}).select('_id').lean()
-            const municipio = await Municipio.findOne({codPro, codMun}).select('_id').lean()
+            const codProvincia = parseInt(direccion.codpro)
+            const codMunicipio = parseInt(direc.codmun)
+            const provincia = await Provincia.findOne({codPro: codProvincia}).select('_id').lean()
+            const municipio = await Municipio.findOne({codPro: codProvincia, codMun: codMunicipio}).select('_id').lean()
             const direccionId = new mongoose.Types.ObjectId() 
             direccionIds.push(direccionId)
 
@@ -97,13 +102,13 @@ module.exports = {
                 provincia: provincia._id,
                 municipio: municipio._id,
                 clienteId: clienteId,
-                esPrincipal: direccion.esprincipal
+                esPrincipal: direccion.esprincipal ?? true
             }
         }))
 
         const insertCliente = Cliente({
             ...cliente, 
-            direccion: direccionIds,
+            direcciones: direccionIds,
             pedidoActual: null,
             historicoPedidos: []
         }).save()
@@ -114,8 +119,10 @@ module.exports = {
             insertDirecciones.push(promiseDireccion)
         })
 
+        const insertPromises = _.concat(insertCliente, insertDirecciones)
+        
         Promise
-            .all([insertCliente, insertDirecciones])
+            .all(insertPromises)
             .then(() => {
                 res.status(200).render('Cliente/RegistroOK.hbs', { layout: null })
             })
@@ -127,5 +134,5 @@ module.exports = {
 }
 
 async function _findProvincias() {
-    return Provincia.find().sort({nombreProvincia: 1}).lean()
+    return Provincia.find().sort({NombreProvincia: 1}).lean()
 }
