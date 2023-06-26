@@ -1,18 +1,22 @@
 $('button:submit').click(function(evt) {
     evt.preventDefault()
+    const reDireccion = /^direc-/
+    const reTlfno     = /^tlfno-/
     const direcciones = []
     const telefonos   = [] 
-
-    for (var pos=0; pos<localStorage.length; pos++) {
+    
+    for (let pos=0; pos<localStorage.length; pos++) {
         // tenemos almacenado direcciones y telefonos con las keys: "direc-0", "tlfno-0", ....
         const key = localStorage.key(pos)
-        if (/^direc-/.test(key)) {
+        const value = JSON.parse(localStorage[key])
+
+        if (reDireccion.test(key)) {
             direcciones.push(JSON.parse(localStorage[key])) 
         } 
-        else if (/^tlfno-/.test(key)) {
+        else if (reTlfno.test(key)) {
             telefonos.push(JSON.parse(localStorage[key])) 
         }
-    };
+    }
 
     const cliente = {
         nombre: $('#inputNombre').val(),
@@ -28,7 +32,7 @@ $('button:submit').click(function(evt) {
             password: $('#inputPassword').val(),
         },
         telefonos, 
-        direcciones,
+        direcciones
     }  
 
     $.ajax({

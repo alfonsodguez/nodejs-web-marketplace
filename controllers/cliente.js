@@ -74,43 +74,43 @@ module.exports = {
     postRegistro: async (req, res) => {
         const cliente = req.body
         const clienteId = new mongoose.Types.ObjectId
-        const rawDirecciones = cliente.direcciones
+        const direccionesEnCrudo = cliente.direcciones
         const direccionIds = []
 
-        console.log(cliente)
-        console.log(rawDirecciones)        
-        const direcciones = await Promise.all(rawDirecciones.map(async direccion => {
-            const codProvincia = parseInt(direccion.codpro)
-            const codMunicipio = parseInt(direc.codmun)
-            const provincia = await Provincia.findOne({codPro: codProvincia}).select('_id').lean()
-            const municipio = await Municipio.findOne({codPro: codProvincia, codMun: codMunicipio}).select('_id').lean()
-            const direccionId = new mongoose.Types.ObjectId() 
-            direccionIds.push(direccionId)
+        const direcciones = await Promise.all(
+            direccionesEnCrudo.map(async direccion => {
+                const codProvincia = parseInt(direccion.codpro)
+                const codMunicipio = parseInt(direccion.codmun)
+                const provincia    = await Provincia.findOne({CodPro: codProvincia}).select('_id').lean()
+                const municipio    = await Municipio.findOne({CodPro: codProvincia, CodMun: codMunicipio}).select('_id').lean()
+                
+                const direccionId = new mongoose.Types.ObjectId() 
+                direccionIds.push(direccionId)
 
-            return direccion = {
-                _id: direccionId,
-                cp: parseInt(direc.cp),
-                tipo: direccion.tipoVia,
-                nombre: direccion.nombreVia,
-                numero: direccion.numeroVia,
-                piso: direccion.piso,
-                puerta: direccion.puerta,
-                bloque: direccion.bloque,
-                escalera: direccion.escalera,
-                urbanizacion: direccion.urbanizacion,
-                observaciones: direccion.observaciones,
-                provincia: provincia._id,
-                municipio: municipio._id,
-                clienteId: clienteId,
-                esPrincipal: direccion.esprincipal ?? true
+                return direccion = {
+                    _id: direccionId,
+                    clienteId: clienteId,
+                    cp: parseInt(direccion.cp),
+                    tipo: direccion.tipoVia,
+                    nombre: direccion.nombreVia,
+                    numero: direccion.numeroVia,
+                    piso: direccion.piso,
+                    puerta: direccion.puerta,
+                    bloque: direccion.bloque,
+                    escalera: direccion.escalera,
+                    urbanizacion: direccion.urbanizacion,
+                    observaciones: direccion.observaciones,
+                    provincia: provincia._id,
+                    municipio: municipio._id,
+                    esPrincipal: direccion.esPrincipal
+                }
             }
-        }))
+        ))
 
         const insertCliente = Cliente({
             ...cliente, 
+            _id: clienteId,
             direcciones: direccionIds,
-            pedidoActual: null,
-            historicoPedidos: []
         }).save()
 
         const insertDirecciones = []
@@ -124,11 +124,11 @@ module.exports = {
         Promise
             .all(insertPromises)
             .then(() => {
-                res.status(200).render('Cliente/RegistroOK.hbs', { layout: null })
+                res.status(200).render('Cliente/Login.hbs', { layout: null })
             })
             .catch(async (err) => {
                 const provincias = await _findProvincias()
-                res.status(200).send('Cliente/Registro.hbs', { layout: null, listaProvincias: provincias, mensajeError: 'Error interno del servidor...' })
+                res.status(200).render('Cliente/Registro.hbs', { layout: null, listaProvincias: provincias, mensajeError: 'Error interno del servidor...' })
             })
     }
 }

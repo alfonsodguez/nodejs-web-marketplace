@@ -13,6 +13,10 @@ $('#botonAceptarDirec').click(function(ev) {
             nuevaDireccion[$('#' + attrLabFor).attr('name')] = $('#' + attrLabFor).is(':checked')
         }
     })
+
+    nuevaDireccion['codProvincia'] = $('#inputLocalidad').attr('value')
+    nuevaDireccion['codMunicipio'] = $('#inputLocalidad').attr('label')
+
     const esOpcionPorDefecto = $('#direcciones > option').first().val() === "No se han definido direcciones"
     if (esOpcionPorDefecto) { 
         $('#direcciones > option').first().remove()

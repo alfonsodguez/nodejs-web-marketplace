@@ -9,7 +9,7 @@ $('#inputProvincia').change(function(evt) {
         
         $.get(url)
         .done((municipios) => municipios.forEach((municipio) => {    
-            $('#inputLocalidad').append('<option value=' + municipio.CodMun + '>'+ municipio.NombreMunicipio + '</option>')
+            $('#inputLocalidad').append('<option value=' + municipio.CodMun + ' label=' + codProvincia +'>'+ municipio.NombreMunicipio + '</option>')
         }))
         .fail(err => console.log('Error al recuperar los municipios', err))
     }
