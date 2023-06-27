@@ -73,9 +73,11 @@ module.exports = {
     },
     postRegistro: async (req, res) => {
         const cliente = req.body
-        const clienteId = new mongoose.Types.ObjectId
+        const email = cliente.email
+        const password = cliente.password
         const direccionesEnCrudo = cliente.direcciones
         const direccionIds = []
+        const clienteId = new mongoose.Types.ObjectId
 
         const direcciones = await Promise.all(
             direccionesEnCrudo.map(async direccion => {
@@ -107,9 +109,14 @@ module.exports = {
             }
         ))
 
+        const saltRounds = 10
+        const salt = await bcrypt.genSalt(saltRounds)
+        const hash = await bcrypt.hash(password, salt)
+
         const insertCliente = Cliente({
             ...cliente, 
             _id: clienteId,
+            credenciales: { email, hash },
             direcciones: direccionIds,
         }).save()
 
