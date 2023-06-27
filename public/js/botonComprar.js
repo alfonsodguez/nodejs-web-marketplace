@@ -21,7 +21,6 @@ $('a[id^="btnComprar"]').click(function() {
         cantidad: parseFloat($(`label[id*="EAN-${ean}"`).text())   
     };
 
-    console.log(itemPedido)
     const pedidoStorage = JSON.parse(localStorage.getItem('pedido'));
     if (pedidoStorage == null) {
         //creo key pedido en el localStorage y añado itemPedido a la lista de pedidos
