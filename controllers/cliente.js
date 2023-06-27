@@ -73,8 +73,8 @@ module.exports = {
     },
     postRegistro: async (req, res) => {
         const cliente = req.body
-        const email = cliente.email
-        const password = cliente.password
+        const email = cliente.credenciales.email
+        const password = cliente.credenciales.password
         const direccionesEnCrudo = cliente.direcciones
         const direccionIds = []
         const clienteId = new mongoose.Types.ObjectId
@@ -134,8 +134,9 @@ module.exports = {
                 res.status(200).render('Cliente/Login.hbs', { layout: null })
             })
             .catch(async (err) => {
+                console.log(err)
                 const provincias = await _findProvincias()
-                res.status(200).render('Cliente/Registro.hbs', { layout: null, listaProvincias: provincias, mensajeError: 'Error interno del servidor...' })
+                res.status(400).render('Cliente/Registro.hbs', { layout: null, listaProvincias: provincias, mensajeError: 'Error interno del servidor...' })
             })
     }
 }

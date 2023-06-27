@@ -47,6 +47,6 @@ $('button:submit').click(function(evt) {
     })
     .fail((err) => {
         // TODO: mostrar en un div en la vista el mensaje de error...
-        console.log(err)
+        console.log('Error en el servidor', err)
     })
 })
