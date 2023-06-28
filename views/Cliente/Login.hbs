@@ -35,17 +35,17 @@
                 <img src="/public/images/imagen_circulo_link_login.gif"><a href="javascript:void(0)">Cliente registrado</a>
             </div>
             <div class="col-md-4" style="border:#ff9900 1pt solid; background:#ffcc00;">
-                <form>
+                <form id="formlogin" action="http://localhost:3000/Cliente/Login" method="post">
                     <div class="row">
-                        <label for="inputEmail" class="col-md-2 col-form-label"><strong>Email de acceso:</strong></label>
+                        <label for="email" class="col-md-2 col-form-label"><strong>Email de acceso:</strong></label>
                         <div class="col-md-10">
-                            <input type="email" class="form-control" id="inputEmail">
+                            <input type="email" class="form-control" id="email" name="email">
                         </div>
                     </div>
                     <div class="row">
-                        <label for="inputPassword" class="col-md-2 col-form-label"><strong>Contraseña:</strong></label>
+                        <label for="password" class="col-md-2 col-form-label"><strong>Contraseña:</strong></label>
                         <div class="col-md-10">
-                            <input type="password" class="form-control" id="inputPassword">
+                            <input type="password" class="form-control" id="password" name="password">
                         </div>
                     </div>
                     <div class="row">
