@@ -91,7 +91,7 @@ module.exports = {
                     const direccionId = new mongoose.Types.ObjectId() 
                     direccionIds.push(direccionId)
 
-                    return direccion = {
+                    return {
                         _id: direccionId,
                         clienteId: clienteId,
                         cp: parseInt(direccion.cp),
