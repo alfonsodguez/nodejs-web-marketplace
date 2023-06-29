@@ -92,21 +92,12 @@ module.exports = {
                     direccionIds.push(direccionId)
 
                     return {
+                        ...direccion,
                         _id: direccionId,
                         clienteId: clienteId,
                         cp: parseInt(direccion.cp),
-                        tipo: direccion.tipoVia,
-                        nombre: direccion.nombreVia,
-                        numero: direccion.numeroVia,
-                        piso: direccion.piso,
-                        puerta: direccion.puerta,
-                        bloque: direccion.bloque,
-                        escalera: direccion.escalera,
-                        urbanizacion: direccion.urbanizacion,
-                        observaciones: direccion.observaciones,
                         provincia: provincia._id,
                         municipio: municipio._id,
-                        esPrincipal: direccion.esPrincipal
                     }
                 }
             ))
