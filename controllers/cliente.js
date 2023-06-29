@@ -11,9 +11,15 @@ const URL = {
     PRODUCTOS: 'http://localhost:3000/Tienda/Productos/15-8-5'
 }
 const RENDER_PATH = {
-    LOGIN: 'Cliente/Login.hbs',
+    LOGIN:    'Cliente/Login.hbs',
     REGISTRO: 'Cliente/Registro.hbs'
 }
+const ERROR_MESSAGE= {
+    SERVER:     'Error interno del servidor',
+    LOGIN:      'Email o contraseña incorrectas, vuelva a intentarlo',
+    PROVINCIAS: 'Error al recuperar las provincias'
+}
+const GASTOS_ENVIO = 3
 
 module.exports = {
     getLogin: (req, res) => { 
@@ -46,16 +52,13 @@ module.exports = {
 
             if (cliente) {
                 const hash = cliente.credenciales.hash
-                const isValidPassword = bcrypt.compareSync(password, hash)
+                const isValidPassword = await bcrypt.compare(password, hash)
             
                 if (isValidPassword) {
                     const pedido = new Pedido({
                         fecha: Date.now(),
-                        estado: 'pendiente',
                         clienteId: cliente._id,
-                        gastosEnvio: 5,
-                        subtotal: 0,
-                        total: 0,
+                        gastosEnvio: GASTOS_ENVIO,
                         articulos: []
                     })
 
@@ -64,9 +67,9 @@ module.exports = {
                 }
                 res.redirect(URL.PRODUCTOS)
             }
-            res.status(400).render(RENDER_PATH.LOGIN, { layout: null,  mensajeErrorCustom: "Email o contraseña incorrectas, vuelve a intentarlo" })
+            res.status(400).render(RENDER_PATH.LOGIN, { layout: null,  mensajeErrorCustom: ERROR_MESSAGE.LOGIN})
         } catch (error) {
-            res.status(500).render(RENDER_PATH.LOGIN, { layout: null, mensajeError: 'Error en el server...'})
+            res.status(500).render(RENDER_PATH.LOGIN, { layout: null, mensajeError: ERROR_MESSAGE.SERVER})
         }
     },
     getRegistro: async (req, res) => { 
@@ -132,11 +135,11 @@ module.exports = {
                 .catch(async (err) => {
                     console.log(err)
                     const provincias = await _findProvincias()
-                    res.status(400).render(RENDER_PATH.REGISTRO, { layout: null, listaProvincias: provincias, mensajeError: 'Error interno del servidor...' })
+                    res.status(400).render(RENDER_PATH.REGISTRO, { layout: null, listaProvincias: provincias, mensajeError: ERROR_MESSAGE.PROVINCIAS })
                 })
 
         } catch (err) {
-            res.status(500).render(RENDER_PATH.REGISTRO, { layout: null, mensajeError: 'Error en el server...'})
+            res.status(500).render(RENDER_PATH.REGISTRO, { layout: null, mensajeError: ERROR_MESSAGE.SERVER})
         }
     }
 }

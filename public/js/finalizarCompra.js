@@ -1,6 +1,6 @@
 $('#formalizar').click(function() {
     const pedido = JSON.parse(localStorage.getItem('pedido'))
-    
+    console.log(pedido)
     $.ajax({
         type: 'POST',
         url: "http://localhost:3000/api/finalizarCompra",
@@ -10,7 +10,10 @@ $('#formalizar').click(function() {
     })
     .done(() => {                
         //redireccionar
-        window.location.href = 'http://localhost:3000/Pedido/FinalizarPedido'
+        window.location.href = 'http://localhost:3000/Pedido/MostrarPedido'
     })
-    .fail((err) => console.log('error al enviar pedido al server', err))
+    .fail((err) => {
+        window.location.href = 'http://localhost:3000/Cliente/Login'
+        console.log('Error al enviar el pedido', err)
+    })
 })

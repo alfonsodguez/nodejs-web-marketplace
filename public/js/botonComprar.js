@@ -17,7 +17,7 @@ $('a[id^="btnComprar"]').click(function() {
     const itemPedido = { 
         ean: $(this).parent().siblings('th').text(),                                                      
         nombre: $(this).parent().siblings('td').first().text(),                                         
-        precio: parseFloat($(this).parent().siblings('td').eq(3).children('p').first().text()),  
+        precio: parseFloat($(this).parent().siblings('td').eq(2).children('p').first().text()),  
         cantidad: parseFloat($(`label[id*="EAN-${ean}"`).text())   
     };
 
@@ -29,7 +29,7 @@ $('a[id^="btnComprar"]').click(function() {
         
         _pintarDatosMiniCesta(itemPedido.nombre, itemPedido.cantidad, itemPedido.precio)
     }
-    else{
+    else {
         //compruebo que si ese item ya existe... entonces incremento cantidad (ojoo!! que la cantidad a añadir pueder ser 1 o mayor)
         const item = pedidoStorage.find((item) => item.ean == itemPedido.ean)
         if (item != null) {

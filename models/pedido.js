@@ -16,14 +16,14 @@ const pedidoSchema = new mongoose.Schema({
 
 pedidoSchema.methods.calcularTotalPedido = async function() {
     const articulosExpanded = await Producto.populate(this.articulos, { path: 'productoItem' })
-    const subtotal = 0
+    let subtotal = 0
 
     articulosExpanded.forEach((articulo) => {
             subtotal += articulo.productoItem.precio * articulo.cantidadItem
         }
     )
     this.subtotal = Math.round(subtotal * 100)/100
-    this.total = subtotal + this.gastosDeEnvio
+    this.total = subtotal + this.gastosEnvio
 }
 
 module.exports = mongoose.model("Pedido", pedidoSchema, "pedidos")
