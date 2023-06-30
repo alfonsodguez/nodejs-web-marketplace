@@ -156,16 +156,16 @@
                                                         <div class="row">
                                                             <div class="form-group col-4">
                                                                 <label for="inputProvincia" class="form-label"><strong>Provincia</strong></label>
-                                                                <select id="inputProvincia" name="codpro" class="form-control">
+                                                                <select id="inputProvincia" name="codProvincia" class="form-control">
                                                                     <option value="0" selected>Elige provincia...</option>
                                                                     {{#each listaProvincias as |provincia|}}
-                                                                        <option value="{{provincia.CodPro}}">{{provincia.NombreProvincia}}</option>
+                                                                        <option value="{{provincia.codProvincia}}">{{provincia.nombre}}</option>
                                                                     {{/each}}
                                                                 </select>
                                                             </div>                    
                                                             <div class="form-group col-6">
                                                                 <label for="inputLocalidad" class="form-label"><strong>Localidad</strong></label>
-                                                                <select id="inputLocalidad" name="codmun" class="form-control" disabled>
+                                                                <select id="inputLocalidad" name="codMunicipio" class="form-control" disabled>
                                                                     <option value="0" selected>Elige localidad...</option>
                                                                 </select>
                                                             </div>                                           
@@ -299,7 +299,7 @@
     </script>
     <script src="/public/js/modalRegistro.js"></script>
     <script src="/public/js/dropdownMunicipios.js"></script>
-    {{!-- <script src="/public/js/validarFormRegistro.js"></script> --}}
+    <script src="/public/js/validarFormRegistro.js"></script> 
     <script src="/public/js/añadirDireccionTlfn.js"></script>
     <script src="/public/js/modificarDireccionTlfn.js"></script>
     <script src="/public/js/envioFormRegistro.js"></script>

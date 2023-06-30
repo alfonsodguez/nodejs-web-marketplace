@@ -1,8 +1,9 @@
 // TODO: modificar y borrar tlfnos
 $('#botonModififcarDirec').click(function(ev) {
     modalAltaDir.show()
-    const numDirecciones   = $('#direcciones').val()
-    const direccionStorage = JSON.parse(localStorage.getItem('direc-' + numDirecciones))
+    const numDirecciones = $('#direcciones').val()
+    const key = 'direc-' + numDirecciones
+    const direccionStorage = JSON.parse(localStorage.getItem(key))
     
     esDireccionModif  = true
     posDireccionModif = parseInt(numDirecciones)
@@ -10,10 +11,10 @@ $('#botonModififcarDirec').click(function(ev) {
     Object.keys(direccionStorage).forEach((prop) => {
         switch(prop) {
             case 'tipoVia':
-            case 'codpro':
-            case 'codmun':
+            case 'codProvincia':
+            case 'codMunicipio':
                 $(`select[name="${prop}"]`).val(direccionStorage[prop])
-                if (prop == 'codpro') {
+                if (prop == 'codProvincia') {
                     document.getElementById('#inputProvincia').dispatchEvent('change')
                 }
                 break
