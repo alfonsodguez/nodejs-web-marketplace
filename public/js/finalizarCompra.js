@@ -1,6 +1,6 @@
 $('#formalizar').click(function() {
     const pedido = JSON.parse(localStorage.getItem('pedido'))
-    console.log(pedido)
+    
     $.ajax({
         type: 'POST',
         url: "http://localhost:3000/api/finalizarCompra",

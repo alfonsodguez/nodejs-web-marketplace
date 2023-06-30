@@ -12,7 +12,7 @@ app.listen(3000)
 
 main()
 .then(() => console.log('Conexion mongo ok'))
-.catch(err => console.log('Error mongo conexion', err))
+.catch(err => console.log('Error conexion mongo', err))
 
 async function main() {
     mongoose.connect(process.env.MONGO_URI)

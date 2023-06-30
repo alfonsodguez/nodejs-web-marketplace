@@ -133,7 +133,6 @@ module.exports = {
                     res.status(200).render(RENDER_PATH.LOGIN, { layout: null })
                 })
                 .catch(async (err) => {
-                    console.log(err)
                     const provincias = await _findProvincias()
                     res.status(400).render(RENDER_PATH.REGISTRO, { layout: null, listaProvincias: provincias, mensajeError: ERROR_MESSAGE.PROVINCIAS })
                 })

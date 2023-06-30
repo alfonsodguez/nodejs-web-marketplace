@@ -6,7 +6,6 @@ $('#botonAceptarDirec').click(function(ev) {
 
     $('div[id="altaDireccion"] label').each((index, lab) => {
         const attrLabFor = $(lab).attr('for')  
-        console.log(attrLabFor)
         if (attrLabFor != "inputEsPrincipal") {
             nuevaDireccion[$('#' + attrLabFor).attr('name')] = $('#' + attrLabFor).val()
         } else {
