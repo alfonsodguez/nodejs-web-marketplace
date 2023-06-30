@@ -21,6 +21,5 @@ const clienteSchema = new mongoose.Schema({
     direcciones:      [{ type: mongoose.Schema.Types.ObjectId, ref: 'Direccion', required: true}], 
     historicoPedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pedido', default: [] }],
     pedidoActual:      { type: mongoose.Schema.Types.ObjectId, ref: 'Pedido' },
-}, 
-{ timestamps: true })
+}, { timestamps: true })
 module.exports = mongoose.model('Cliente', clienteSchema, 'clientes')

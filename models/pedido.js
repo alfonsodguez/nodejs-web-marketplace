@@ -12,7 +12,7 @@ const pedidoSchema = new mongoose.Schema({
         productoItem: { type: mongoose.Schema.Types.ObjectId, ref: 'Producto' },
         cantidadItem: { type: Number, required: true  },
     }]
-}, { timestamps: true})
+}, { timestamps: true })
 
 pedidoSchema.methods.calcularTotalPedido = async function() {
     const articulosExpanded = await Producto.populate(this.articulos, { path: 'productoItem' })
@@ -25,5 +25,4 @@ pedidoSchema.methods.calcularTotalPedido = async function() {
     this.subtotal = Math.round(subtotal * 100)/100
     this.total = subtotal + this.gastosEnvio
 }
-
 module.exports = mongoose.model("Pedido", pedidoSchema, "pedidos")
