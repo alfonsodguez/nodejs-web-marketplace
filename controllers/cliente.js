@@ -27,7 +27,7 @@ module.exports = {
     },
     postLogin: async (req, res) => {
         try {
-            const {password, email} = req.body
+            const { password, email } = req.body
         
             const cliente = await Cliente
                 .findOne({'credenciales.email': email})
@@ -67,15 +67,15 @@ module.exports = {
                 }
                 res.redirect(URL.PRODUCTOS)
             }
-            res.status(400).render(RENDER_PATH.LOGIN, { layout: null,  mensajeErrorCustom: ERROR_MESSAGE.LOGIN})
+            res.status(400).render(RENDER_PATH.LOGIN, { layout: null,  mensajeErrorCustom: ERROR_MESSAGE.LOGIN })
         } catch (error) {
-            res.status(500).render(RENDER_PATH.LOGIN, { layout: null, mensajeError: ERROR_MESSAGE.SERVER})
+            res.status(500).render(RENDER_PATH.LOGIN, { layout: null, mensajeError: ERROR_MESSAGE.SERVER })
         }
     },
     getRegistro: async (req, res) => { 
         const provincias =  await _findProvincias()
 
-        res.status(200).render(RENDER_PATH.REGISTRO, { layout: null, listaProvincias: provincias}) 
+        res.status(200).render(RENDER_PATH.REGISTRO, { layout: null, listaProvincias: provincias }) 
     },
     postRegistro: async (req, res) => {
         try {
@@ -88,8 +88,8 @@ module.exports = {
                 direccionesEnCrudo.map(async direccion => {
                     const codProvincia = parseInt(direccion.codpro)
                     const codMunicipio = parseInt(direccion.codmun)
-                    const provincia    = await Provincia.findOne({CodPro: codProvincia}).select('_id').lean()
-                    const municipio    = await Municipio.findOne({CodPro: codProvincia, CodMun: codMunicipio}).select('_id').lean()
+                    const provincia    = await Provincia.findOne({ codProvincia }).select('_id').lean()
+                    const municipio    = await Municipio.findOne({ codProvincia, codMunicipio }).select('_id').lean()
 
                     const direccionId = new mongoose.Types.ObjectId() 
                     direccionIds.push(direccionId)
@@ -139,11 +139,11 @@ module.exports = {
                 })
 
         } catch (err) {
-            res.status(500).render(RENDER_PATH.REGISTRO, { layout: null, mensajeError: ERROR_MESSAGE.SERVER})
+            res.status(500).render(RENDER_PATH.REGISTRO, { layout: null, mensajeError: ERROR_MESSAGE.SERVER })
         }
     }
 }
 
 async function _findProvincias() {
-    return Provincia.find().sort({NombreProvincia: 1}).lean()
+    return Provincia.find().sort({ nombre: 1 }).lean()
 }

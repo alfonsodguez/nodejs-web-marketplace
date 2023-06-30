@@ -7,10 +7,11 @@ module.exports = {
     getMunicipios: async (req, res) => {
         try {
             const codProvincia = req.params.id
-            const municipios = await Municipio.find({CodPro: codProvincia}).lean()
+            const municipios = await Municipio.find({ codProvincia }).lean()
 
             res.status(200).json(municipios)
         } catch (err) {
+            res.status(500).send()
             console.log('Error al recuperar los municipios', err)
         }
     },
@@ -28,7 +29,7 @@ module.exports = {
             
             const articulos = await Promise.all(
                 pedidoEnCrudo.map(async(itemPedido) => {
-                    const producto = await Producto.findOne({ean: itemPedido.ean}).select('_id cantidad').lean()
+                    const producto = await Producto.findOne({ ean: itemPedido.ean }).select('_id cantidad').lean()
 
                     return {
                         productoItem: producto._id,
@@ -38,6 +39,7 @@ module.exports = {
             )
 
             pedido.articulos = articulos
+            pedido.estado = "en curso"
             await pedido.calcularTotalPedido()
             await pedido.save()
 
