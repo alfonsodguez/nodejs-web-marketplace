@@ -11,7 +11,6 @@ module.exports = {
 
             res.status(200).json(municipios)
         } catch (err) {
-            console.log('Error al recuperar los municipios', err)
             res.status(500).send()
         }
     },

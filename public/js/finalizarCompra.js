@@ -13,7 +13,6 @@ $('#formalizar').click(function() {
         window.location.href = 'http://localhost:3000/Pedido/MostrarPedido'
     })
     .fail((err) => {
-        window.location.href = 'http://localhost:3000/Cliente/Login'
-        console.log('Error al enviar el pedido', err)
+        window.location.href = 'http://localhost:3000/Tienda/Productos'
     })
 })

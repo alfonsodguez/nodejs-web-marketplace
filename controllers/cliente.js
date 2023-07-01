@@ -8,7 +8,7 @@ const Municipio = require('../models/municipio')
 const Pedido = require('../models/pedido')
 
 const URL = {
-    PRODUCTOS: 'http://localhost:3000/Tienda/Productos/15-8-5'
+    PRODUCTOS: 'http://localhost:3000/Tienda/Productos'
 }
 const RENDER_PATH = {
     LOGIN:    'Cliente/Login.hbs',
@@ -67,7 +67,7 @@ module.exports = {
                 }
                 res.redirect(URL.PRODUCTOS)
             }
-            res.status(400).render(RENDER_PATH.LOGIN, { layout: null,  mensajeErrorCustom: ERROR_MESSAGE.LOGIN })
+            res.status(400).render(RENDER_PATH.LOGIN, { layout: null, mensajeErrorCustom: ERROR_MESSAGE.LOGIN })
         } catch (error) {
             res.status(500).render(RENDER_PATH.LOGIN, { layout: null, mensajeError: ERROR_MESSAGE.SERVER })
         }
@@ -112,10 +112,7 @@ module.exports = {
             const insertCliente = Cliente({
                 ...cliente, 
                 _id: clienteId,
-                credenciales: { 
-                    email: cliente.credenciales.email,
-                    hash
-                },
+                credenciales: { email: cliente.credenciales.email, hash },
                 direcciones: direccionIds,
             }).save()
 
