@@ -1,92 +1,104 @@
 localStorage.clear()
-//estado de los input obligatorios
-let estadoCajas = { 'direcciones': false, 'telefonos': false }
 
-function validar(patron, id) {
+const reValueLabs = /^\*(?!Direccion|Telefono).*/
+const reNombre    = /^[a-zA-Z]{1,50}$/
+const reNIF       = /^[0-9]{8}[a-zA-Z]$/
+const reCIF       = /^[a-zA-Z][0-9]{8}$/
+const rePasaporte = /^[0-9]{9}$/
+const rePassword  = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\+])(?=.{8,20})/
+const reEmail     = /^.*@.*\.(com|es|uk|it|org)$/
+const reTlfno     = /^[0-9]{9}$/
+
+//estado de los input obligatorios
+let estadoCajas = {}
+
+function setEstadoCajasByDefault(id) {
+    estadoCajas[id] = false
+}
+
+function validarValorCampo(patron, id) {
     const inputId = $('#' + id).val()
     const isValid = patron.test(inputId)
+
     if (isValid) {
         estadoCajas[id] = true
     } else {
         estadoCajas[id] = false
-    }  
+    }
+}
+
+function validarSiCampoCubierto({ value, id }) {
+    const campoCubierto = value === undefined || value === ''
+
+    if (campoCubierto) {
+        estadoCajas[id] = false
+    } else {
+        estadoCajas[id] = true
+    }
+}
+
+function validarCamposEq(inputCampo, inputConfirmCampo, attrLabFor) {
+    const campoCubierto        = estadoCajas[inputCampo] === true
+    const confirmCampoCubierto = estadoCajas[inputConfirmCampo] === true
+
+    if (campoCubierto && confirmCampoCubierto) {
+        const campo        = $(`#${inputCampo}`).val()
+        const confirmCampo = $(`#${inputConfirmCampo}`).val()
+        estadoCajas[attrLabFor] = campo === confirmCampo
+    }
+}
+
+function checkEstadoCajas() {
+    const cajasKO = Object.keys(estadoCajas).some(input => estadoCajas[input] === false)
+
+    if (!cajasKO) {
+        $('#btnEnviarAlta').removeAttr('disabled')
+    }
 }
 
 $('label')
-.filter((index, lab) => /^\*(?!Direccion|Nombre via|Telefono).*/.test($(lab).text()))
+.filter((index, lab) => reValueLabs.test($(lab).text()))
 .each((index, lab) => {
     const attrLabFor = $(lab).attr('for')
-    estadoCajas[attrLabFor] = false                  
+    setEstadoCajasByDefault(attrLabFor)
 
-    $('input[id="' + $(lab).attr('for') + '"]').blur(function(ev) {   
-        // validar si los campos estan rellenos 
-        const campoCubierto = $(ev.target).val() === undefined || $(ev.target).val() === ''                    
-        if (campoCubierto) {
-            estadoCajas[$(ev.target).attr('id')] = false
-        } else {
-            estadoCajas[$(ev.target).attr('id')] = true
-        }
+    $('input[id="' + $(lab).attr('for') + '"]').blur(function(ev) {
+        const value = $(ev.target).val()
+        const id    = $(ev.target).attr('id')
+        validarSiCampoCubierto({ value, id })
 
-        // validar valor de los campos 
-        switch(attrLabFor) {
+        switch (attrLabFor) {
             case "inputNombre":
-                validar(/^[a-zA-Z]{1,50}$/, attrLabFor)
+            case "inputNombreVia":
+                validarValorCampo(reNombre, attrLabFor)
                 break
             case "inputIdentif":
-                switch($('#dropdownTipoIdentif').val()) {
+                switch ($('#dropdownTipoIdentif').val()) {
                     case 'NIF':
-                        validar(/^[0-9]{8}[a-zA-Z]$/, attrLabFor)
+                        validarValorCampo(reNIF, attrLabFor)
                         break
                     case 'CIF':
-                        validar(/^[a-zA-Z][0-9]{8}$/, attrLabFor)
+                        validarValorCampo(reCIF, attrLabFor)
                         break
                     case 'Pasaporte':
-                        validar(/^[0-9]{9}$/, attrLabFor)
+                        validarValorCampo(rePasaporte, attrLabFor)
                         break
                 }
                 break
             case "inputPassword":
             case "inputRePassword":
-                validar(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,20})/, attrLabFor)
-
-                const passwordCubierto  = estadoCajas['inputPassword'] === true
-                const repassworCubierto = estadoCajas['inputRePassword'] === true
-
-                if (passwordCubierto && repassworCubierto) {
-                    const password   = $('#inputPassword').val()
-                    const repassword = $('#inputRePassword').val()
-                    estadoCajas[attrLabFor] = password === repassword
-                }    
+                validarValorCampo(rePassword, attrLabFor)
+                validarCamposEq(attrLabFor)
                 break
             case "inputEmail":
             case "inputConfEmail":
-                const email          = $('#inputEmail').val()
-                const confirmarEmail = $('#inputConfEmail').val()
-                estadoCajas[attrLabFor] = email === confirmarEmail
+                validarValorCampo(reEmail, attrLabFor)
+                validarCamposEq(attrLabFor)
+                break
+            case "inputTelefono":
+                validarValorCampo(reTlfno, attrLabFor)
                 break
         }
-        
-        // validar si tlfnos y direcciones del dropdown coinciden con el localstorage
-        const numDireccionesStorage = 0
-        const numTelefonosStorage = 0
-        for (let a=0; a<localStorage.length; a++) { 
-            if ( /^direc-/.test(localStorage.key(a)) ) {
-                numDireccionesStorage++
-            }
-            if ( /^tlfno-/.test(localStorage.key(a)) ) {
-                numTelefonosStorage++
-            }
-        }
-        const esDireccionesOk = $('#direcciones option').length === numDireccionesStorage
-        const esTelefonosOk   = $('#telefonos option').length === numTelefonosStorage
-        estadoCajas['direcciones'] = esDireccionesOk
-        estadoCajas['telefonos']   = esTelefonosOk
-            
-        //comprobamos estado generaral de las cajas, y habilitamos o no el boton:
-        const cajasOk = Object.keys(estadoCajas).some(input => estadoCajas[input] === false) 
-        if (cajasOk) {
-            $('#btnEnviarAlta').attr('disabled','true')
-        }
-        $('#btnEnviarAlta').removeAttr('disabled')
+        checkEstadoCajas()
     })
 })
