@@ -32,7 +32,7 @@ categorias.forEach(categoria => {
     const paths = categoria.path.split(separadorCategoria)
     if (paths.length == 1) {
         treeview.append(`<li id="${categoria.path}"><span class="caret">${categoria.nombre}</span></li>`)          
-    }
+    } 
 })
 
 $(".caret").click(despliegaSubcategorias)
