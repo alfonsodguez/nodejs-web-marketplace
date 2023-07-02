@@ -36,3 +36,12 @@ categorias.forEach(categoria => {
 })
 
 $(".caret").click(despliegaSubcategorias)
+
+
+// --- alternativa con reduce --- 
+// const tags = subCategorias.reduce((acc, subCategoria, index) => {
+//     if (subCategorias.length === index++) {
+//         return acc + '</ul>'
+//     }
+//     return acc + `<li id="${subCategoria.path}"><span class="caret">${subCategoria.nombre}</span></li>`
+// }, '<ul class="nested">')
