@@ -1,5 +1,5 @@
 // TODO: modificar y borrar tlfnos
-$('#botonModififcarDirec').click(function(ev) {
+$('#botonModificarDirec').click(function(ev) {
     modalAltaDir.show()
     const numDirecciones = $('#direcciones').val()
     const key = 'direc-' + numDirecciones

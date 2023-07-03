@@ -11,8 +11,8 @@ routing(app)
 app.listen(3000)    
 
 main()
-.then(() => console.log('Conexion mongo ok'))
-.catch(err => console.log('Error conexion mongo', err))
+.then(() => console.log('Conexión mongo ok'))
+.catch(err => console.log('Error conexión mongo', err))
 
 async function main() {
     mongoose.connect(process.env.MONGO_URI)

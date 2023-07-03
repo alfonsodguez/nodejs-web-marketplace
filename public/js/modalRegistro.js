@@ -1,5 +1,5 @@
-$('#botonAltaDir').click(function() { modalAltaDirecccion.show(); esDireccionModif = false })
-$('#botonCierraModalDir').click(function() { modalAltaDirecccion.hide() })
+$('#btnAltaDireccion').click(function() { modalAltaDirecccion.show(); esDireccionModif = false })
+$('#btnCierraModalDireccion').click(function() { modalAltaDirecccion.hide() })
 
-$('#botonAltaTlfno').click(function() { modalAltaTlfn.show(); esTlfnModif = false})
-$('#botonCierraModalTlfno').click(function() { modalAltaTlfn.hide() })
+$('#btnAltaTlfno').click(function() { modalAltaTlfn.show(); esTlfnModif = false })
+$('#btnCierraModalTlfno').click(function() { modalAltaTlfn.hide() })

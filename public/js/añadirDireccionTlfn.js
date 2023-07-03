@@ -13,8 +13,8 @@ $('#botonAceptarDirec').click(function(ev) {
         }
     })
 
-    nuevaDireccion['codProvincia'] = $('#inputLocalidad').attr('value')
-    nuevaDireccion['codMunicipio'] = $('#inputLocalidad').attr('label')
+    nuevaDireccion['codProvincia'] = $('#inputLocalidad option:selected').attr('value')
+    nuevaDireccion['codMunicipio'] = $('#inputLocalidad option:selected').attr('label')
 
     const esOpcionPorDefecto = $('#direcciones > option').first().val() === "No se han definido direcciones"
     if (esOpcionPorDefecto) { 
@@ -32,7 +32,7 @@ $('#botonAceptarDirec').click(function(ev) {
     }
         
     //habilitamos botones borrar y modificar direccion...
-    $('#botonModififcarDirec, #botonBorrarDirec').removeAttr('disabled')
+    $('#botonModificarDirec, #botonBorrarDirec').removeAttr('disabled')
     modalAltaDirecccion.hide()
 })
 

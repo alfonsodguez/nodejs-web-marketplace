@@ -86,8 +86,8 @@ module.exports = {
           
             const direcciones = await Promise.all(
                 direccionesEnCrudo.map(async direccion => {
-                    const codProvincia = parseInt(direccion.codpro)
-                    const codMunicipio = parseInt(direccion.codmun)
+                    const codProvincia = parseInt(direccion.codProvincia)
+                    const codMunicipio = parseInt(direccion.codMunicipio)
                     const provincia    = await Provincia.findOne({ codProvincia }).select('_id').lean()
                     const municipio    = await Municipio.findOne({ codProvincia, codMunicipio }).select('_id').lean()
 
