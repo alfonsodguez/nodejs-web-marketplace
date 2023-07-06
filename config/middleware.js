@@ -7,7 +7,7 @@ module.exports = (app) => {
     app.use(cookieParser())
     app.use(express.urlencoded({extended: false}))
     app.use(express.json()) 
-    //--------- configuracion session ------------
+    //--------- configuracion cookie session ------------
     app.use(session({
         secret: process.env.SECRET_KEY_SESSION,
         resave: false,

@@ -6,19 +6,8 @@ const Direccion = require('../models/direccion')
 const Provincia = require('../models/provincia')
 const Municipio = require('../models/municipio')
 const Pedido = require('../models/pedido')
+const {URL, RENDER_PATH, ERROR_MESSAGE} = require('../models/enums')
 
-const URL = {
-    PRODUCTOS: 'http://localhost:3000/Tienda/Productos'
-}
-const RENDER_PATH = {
-    LOGIN:    'Cliente/Login.hbs',
-    REGISTRO: 'Cliente/Registro.hbs'
-}
-const ERROR_MESSAGE= {
-    SERVER:     'Error interno del servidor',
-    LOGIN:      'Email o contraseña incorrectas, vuelva a intentarlo',
-    PROVINCIAS: 'Error al recuperar las provincias'
-}
 const GASTOS_ENVIO = 3
 
 module.exports = {
@@ -78,12 +67,12 @@ module.exports = {
         res.status(200).render(RENDER_PATH.REGISTRO, { layout: null, listaProvincias: provincias }) 
     },
     postRegistro: async (req, res) => {
+        const cliente = req.body
+        const direccionesEnCrudo = cliente.direcciones
+        const direccionIds = []
+        const clienteId = new mongoose.Types.ObjectId
+        
         try {
-            const cliente = req.body
-            const direccionesEnCrudo = cliente.direcciones
-            const direccionIds = []
-            const clienteId = new mongoose.Types.ObjectId
-          
             const direcciones = await Promise.all(
                 direccionesEnCrudo.map(async direccion => {
                     const codProvincia = parseInt(direccion.codProvincia)
@@ -131,7 +120,7 @@ module.exports = {
                 })
                 .catch(async (err) => {
                     const provincias = await _findProvincias()
-                    res.status(400).render(RENDER_PATH.REGISTRO, { layout: null, listaProvincias: provincias, mensajeError: ERROR_MESSAGE.PROVINCIAS })
+                    res.status(400).render(RENDER_PATH.REGISTRO, { layout: null, listaProvincias: provincias, mensajeError: ERROR_MESSAGE.REGISTRO })
                 })
 
         } catch (err) {

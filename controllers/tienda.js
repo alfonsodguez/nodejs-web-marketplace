@@ -1,12 +1,13 @@
 const Categoria = require('../models/categoria')
 const Producto = require('../models/producto')
+const {RENDER_PATH} = require('../models/enums')
 
 module.exports = {
     getPrincipal: async (req, res) => {
         const categorias = await _findCategorias()
         const serializeCategorias = JSON.stringify(categorias)
 
-        res.status(200).render('Tienda/Principal.hbs', { listaCategorias: serializeCategorias })
+        res.status(200).render(RENDER_PATH.HOME, { listaCategorias: serializeCategorias })
     },
     getProductos: async (req, res) => {
         const pathCategoria = req.params.cat 
@@ -20,7 +21,7 @@ module.exports = {
         const categorias = await _findCategorias()
         const serializeCategorias = JSON.stringify(categorias)
 
-        res.status(200).render('Tienda/Productos.hbs', { listaCategorias: serializeCategorias, listaProductos: productos })
+        res.status(200).render(RENDER_PATH.TIENDA, { listaCategorias: serializeCategorias, listaProductos: productos })
     }
 }
 

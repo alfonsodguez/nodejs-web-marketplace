@@ -1,12 +1,11 @@
 const express = require('express')
 const router = express.Router()
+const {URL} = require('../models/enums')
 
 router.get("/", getHome)
 
 function getHome(req, res) {
-    const urlHome = 'http://localhost:3000/Tienda/Principal'
-
-    res.redirect(urlHome)
+    res.redirect(URL.HOME)
 }
 
 module.exports = router
