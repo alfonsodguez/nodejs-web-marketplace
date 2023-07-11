@@ -1,6 +1,7 @@
 const URL = {
     PRODUCTOS: 'http://localhost:3000/Tienda/Productos',
-    HOME:      'http://localhost:3000/Tienda/Principal'
+    HOME:      'http://localhost:3000/Tienda/Principal',
+    LOGIN:     'http://localhost:3000/Cliente/Login'
 }
 const RENDER_PATH = {
     LOGIN:      'Cliente/Login.hbs',

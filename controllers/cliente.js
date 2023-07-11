@@ -55,8 +55,9 @@ module.exports = {
                     req.session.cliente  = cliente    
                 }
                 res.redirect(URL.PRODUCTOS)
+            } else {
+                res.status(400).render(RENDER_PATH.LOGIN, { layout: null, mensajeErrorCustom: ERROR_MESSAGE.LOGIN })
             }
-            res.status(400).render(RENDER_PATH.LOGIN, { layout: null, mensajeErrorCustom: ERROR_MESSAGE.LOGIN })
         } catch (error) {
             res.status(500).render(RENDER_PATH.LOGIN, { layout: null, mensajeError: ERROR_MESSAGE.SERVER })
         }
