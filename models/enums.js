@@ -14,7 +14,14 @@ const ERROR_MESSAGE= {
     SERVER:     'Error interno del servidor',
     LOGIN:      'Email o contraseña incorrectas, vuelva a intentarlo',
     REGISTRO:   'Error en el registro',
-    PROVINCIAS: 'Error al recuperar las provincias'
+    PROVINCIAS: 'Error al recuperar las provincias',
+    MUNICIPIOS: 'Error al recuperar los municipios',
+    SESSION:    'Session requerida',
+    CLIENTE:    'Error: cliente no encontrado',
+    DIRECCION:  'Error: direccion requerida',
+    ARTICULOS:  'Error: articulos no encontrados',
+    PRODUCTOS:  'Error: productos no expandidos ok',
+    CATEGORIAS: 'Error al recuperar las categorias'
 }
 
 module.exports = {

@@ -1,13 +1,14 @@
-const express = require('express')
-const session = require('express-session')
-const viewEngine = require('express-handlebars')
+const express      = require('express')
+const session      = require('express-session')
+const viewEngine   = require('express-handlebars')
 const cookieParser = require('cookie-parser')
 
 module.exports = (app) => {
     app.use(cookieParser())
-    app.use(express.urlencoded({extended: false}))
+    app.use(express.urlencoded( { extended: false } ))
     app.use(express.json()) 
-    //--------- configuracion cookie session ------------
+    app.use('/public', express.static('public', { index: false, maxAge: '1d' }))
+    // configuración cookie session 
     app.use(session({
         secret: process.env.SECRET_KEY_SESSION,
         resave: false,
@@ -19,7 +20,7 @@ module.exports = (app) => {
             secure: false
         }
     }))
-    app.use('/public', express.static('public', { index: false, maxAge: '1d' }))
+    // configuración view-engine handlebars
     app.set('views', __dirname + '/../views')
     app.engine('hbs', viewEngine.create({
         extname: 'hbs',

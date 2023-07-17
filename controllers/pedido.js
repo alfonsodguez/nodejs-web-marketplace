@@ -1,4 +1,3 @@
-const Pedido = require('../models/pedido')
 const {RENDER_PATH} = require('../models/enums')
 
 module.exports = {

@@ -1,8 +1,8 @@
-const routeHome = require('./routingHome')
+const routeHome    = require('./routingHome')
 const routeCliente = require('./routingCliente')
-const routeREST = require('./routingREST')
-const routeTienda = require('./routingTienda')
-const routePedido = require('./routingPedido')
+const routeREST    = require('./routingREST')
+const routeTienda  = require('./routingTienda')
+const routePedido  = require('./routingPedido')
  
 module.exports = (app) => {
     app.use('/',        routeHome)
