@@ -6,6 +6,7 @@ const Direccion = require('../models/direccion')
 const Provincia = require('../models/provincia')
 const Municipio = require('../models/municipio')
 const Pedido    = require('../models/pedido')
+const cache     = require('../lib/cache')
 const {URL, RENDER_PATH, ERROR_MESSAGE} = require('../models/enums')
 const { DataNotFoundError, InvalidPasswordError } = require('../errors/custom')
 
@@ -134,5 +135,14 @@ module.exports = {
 }
 
 async function _findProvincias() {
-    return Provincia.find().sort({ nombre: 1 }).lean()
+    const key = 'prov'
+    let provincias = cache.get(key)
+
+    if (!provincias) {
+        provincias = Provincia.find().sort({ nombre: 1 }).lean()
+
+        cache.set(key, provincias)
+    }
+
+    return provincias 
 }

@@ -1,5 +1,6 @@
 const Categoria = require('../models/categoria')
 const Producto  = require('../models/producto')
+const cache     = require('../lib/cache')
 const { DataNotFoundError } = require('../errors/custom')
 const { RENDER_PATH, ERROR_MESSAGE } = require('../models/enums')
 
@@ -40,5 +41,14 @@ module.exports = {
 }
 
 async function _findCategorias() {
-    return Categoria.find().lean()
+    const key = 'catg'
+    let categorias = cache.get(key)
+
+    if (!categorias) {
+        categorias = await Categoria.find().lean()
+
+        cache.set(key, categorias)
+    }
+
+    return categorias
 }
